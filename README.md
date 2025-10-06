@@ -1,7 +1,7 @@
 # AI Real Estate Offer Automation
 
 **Projekt célja:**  
-Ez a projekt egy **automatizált ingatlan-ajánlattételi workflow** bemutatása low-code / no-code platformokon (Make.com és n8n), ahol a felhasználói adatokból (Google Form) **AI generálja a részletes ajánlatot**, amit **Google Sheets-be elment** és **Hemailben elküld a felhasználónak**.
+Ez a projekt egy **automatizált ingatlan-ajánlattételi workflow** bemutatása low-code / no-code platformokon (Make.com és n8n), ahol a felhasználói adatokból (Google Form) **AI generálja a részletes ajánlatot**, amit **Google Sheets-be elment** és **emailben elküld a felhasználónak**.
 
 ---
 
@@ -22,6 +22,13 @@ Ez a projekt egy **automatizált ingatlan-ajánlattételi workflow** bemutatása
 - **Google Forms** – adatgyűjtés  
 - **Google Sheets** – adatmentés  
 - **SMTP / Brevo** – emailküldés  
+
+---
+
+## Video
+
+- A projekt működését bemutató videók
+- Make.com: https://youtu.be/_P5QaFv0EHc
 
 ---
 
