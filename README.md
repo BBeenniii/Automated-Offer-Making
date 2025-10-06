@@ -34,7 +34,7 @@ Ez a projekt egy **automatizált ingatlan-ajánlattételi workflow** bemutatása
 ---
 
 ## Note
-Ez a projekt kifejezetten az iBuying Zrt. Junior AI fejlesztő pozícióra való jelentkezéshez készült.
+Ez a projekt kifejezetten az iBuying Zrt. Junior AI fejlesztő pozícióra való jelentkezéshez készült.  
 *A projekt két MVP színtű automatizációs megoldást tartalmaz, a hirdetésben említett két platformon. A projekt valódi lényege a referencia biztosítása*
 
 
