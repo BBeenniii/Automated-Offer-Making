@@ -14,10 +14,10 @@ Ez a projekt egy **automatizált ingatlan-ajánlattételi workflow** bemutatása
 
 ---
 
-## Techstack
+## "Techstack"
 
 - **Make.com** – low-code workflow automatizáció  
-- **n8n** – alternatív low-code workflow platform  
+- **n8n** – low-code workflow automatizáció 
 - **OpenAI API** – AI generált ajánlatok  
 - **Google Forms** – adatgyűjtés  
 - **Google Sheets** – adatmentés  
@@ -29,14 +29,15 @@ Ez a projekt egy **automatizált ingatlan-ajánlattételi workflow** bemutatása
 
 - A projekt működését bemutató videók
 - Make.com: https://youtu.be/_P5QaFv0EHc
+- n8n.io: https://youtu.be/lkcfdAwLWM4
 
 ---
 
 ## Note
 Ez a projekt kifejezetten az iBuying Zrt. Junior AI fejlesztő pozícióra való jelentkezéshez készült.
+*A projekt két MVP színtű automatizációs megoldást tartalmaz, a hirdetésben említett két platformon. A projekt valódi lényege a referencia biztosítása*
 
 
-
-*Holló Benjámin*
+***Holló Benjámin***
 
 
