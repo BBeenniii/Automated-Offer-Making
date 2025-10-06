@@ -1,0 +1,305 @@
+{
+  "name": "Auto Offer",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "9bc909c2-dd8f-4f97-84dd-3b61d42e818e",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "786557cb-2450-4f9c-ae24-dee8a30fa86c",
+      "name": "Webhook",
+      "webhookId": "9bc909c2-dd8f-4f97-84dd-3b61d42e818e"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-4-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You are a professional real estate AI assistant. Generate concise, factual, and structured property valuations. \nFocus only on the property description, estimated price range, and reasoning. Write in Hungarian.",
+              "role": "system"
+            },
+            {
+              "content": "=Generate a professional real estate offer based on the following data:\n{{ JSON.stringify($json) }}\n\nWrite the offer in Hungarian.\nWrite in this form:\n<h3>Kedves (instert name here)</h3><br>\n<p>In this paragraph write the details of the property sentence like. </p><br>\n<p><strong>Becsült ár: PRICE(instert your estimation of price in HUF here)</strong><br>Under the price reason why you estimate the value aboive. take into account every envriontmental factor, public transport etc you can</p><br>\n<p>Make a short summarization in 1-2 sentences</p><br>\n<p>end the offer like: További részletekért vegye fel velünk a kapcsolatot!</p>\n\nIt is important to note that we are not selling these real estates, you as an agent is used to estimate the price of the property the customer gives us, so NEVER begin the offer like you want to sell it to them. Also try to aim for around 300 words in answer."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        256,
+        0
+      ],
+      "id": "d9805c87-803b-4fbf-b242-0ed71e6a92c9",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "mCBzzqnI71cEhF4J",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "hollobeni20@gmail.com",
+        "toEmail": "hollobeni20@gmail.com",
+        "subject": "Auto Real Estate Offer",
+        "html": "=<div style=\"font-family: Arial, sans-serif; color: #333; line-height: 1.5; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px; background-color: #f9f9f9;\">\n \n  <div style=\"text-align: center; margin-bottom: 20px;\">\n    <img src=\"https://yourcompany.com/logo.png\" alt=\"AI Ajánlatkészítő Platform\" style=\"height:50px;\">\n    <h2 style=\"color:#4CAF50; margin:10px 0;\">Automatikus {{ $('Webhook').item.json.body['Ajánlat típusa'] }} típusú ajánlatunk elkészült!</h2>\n  </div>\n\n  <p>Kedves {{ $('Webhook').item.json.body.Név}},</p>\n  <p>Köszönjük, hogy kipróbáltad az <strong>AI Ajánlatkészítő Platformunkat</strong>. Az alábbiakban megtalálod az automatikusan generált ajánlatot a megadott ingatlanodra:</p>\n\n  <div style=\"background:#fff; padding:15px; border-left:4px solid #4CAF50; margin:15px 0; border-radius:4px;\">\n    {{ $('Message a model').last().json.message.content }}\n\n  </div>\n\n  <p style=\"text-align:center; margin:20px 0;\">\n    <a href=\"https://URL_of_conatct.com\" style=\"display:inline-block; padding:10px 20px; background:#4CAF50; color:#fff; text-decoration:none; border-radius:5px;\">Vegye fel velünk a kapcsolatot</a>\n  </p>\n\n  <hr style=\"border:0; border-top:1px solid #e0e0e0; margin:20px 0;\">\n  <p style=\"font-size:12px; color:#777;\">AI Ajánlatkészítő Platform – <a href=\"https://yourcompany.com\" style=\"color:#4CAF50; text-decoration:none;\">company.com</a></p>\n</div>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        592,
+        0
+      ],
+      "id": "b94b7ebe-911f-45b2-9457-a14c8bfc7b59",
+      "name": "Send email",
+      "webhookId": "b52b17a3-9b2e-4d81-969d-6a0e0e5d2894",
+      "credentials": {
+        "smtp": {
+          "id": "0jqg1y58anlpiE1e",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wF8mO8i_o7qRai96d_JEOwAiiYoaWza_pkdHVtQqowQ",
+          "mode": "list",
+          "cachedResultName": "Real Estate Auto",
+          "cachedResultUrl": "GOOGLE_SHEETS_URL"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Saved Offers",
+          "cachedResultUrl": "GOOGLE_SHEETS_URL"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Név": "={{ $('Webhook').item.json.body.Név }}",
+            "Email cím": "={{ $('Webhook').item.json.body['Email cím']}}",
+            "Ingatlan Címe": "={{ $('Webhook').item.json.body['Ingatlan címe']}}",
+            "Ajánlat típusa": "={{ $('Webhook').item.json.body['Ajánlat típusa']}}",
+            "Ingatlan típusa": "={{ $('Webhook').item.json.body['Ingatlan típusa']}}",
+            "Ingatlan mérete": "={{ $('Webhook').item.json.body['Ingatlan Mérete (négyzetméter)']}}",
+            "Szobák száma": "={{ $('Webhook').item.json.body['Szobák száma']}}",
+            "Ingatlan állapota": "={{ $('Webhook').item.json.body['Ingatlan Állapota']}}",
+            "Építés éve": "={{ $('Webhook').item.json.body['Építés éve']}}",
+            "Extrák": "={{ $('Webhook').item.json.body['Extra lehetőségek']}}",
+            "Ügyfél megjegyzése": "={{ $('Webhook').item.json.body['Megjegyzés / Egyéb információk']}}",
+            "AI ajánlata": "={{ $('Message a model').last().json.message.content }}",
+            "Elküldés dátuma": "={{ $now }}"
+          },
+          "matchingColumns": [
+            "Név"
+          ],
+          "schema": [
+            {
+              "id": "Név",
+              "displayName": "Név",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email cím",
+              "displayName": "Email cím",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ingatlan Címe",
+              "displayName": "Ingatlan Címe",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ajánlat típusa",
+              "displayName": "Ajánlat típusa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ingatlan típusa",
+              "displayName": "Ingatlan típusa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ingatlan mérete",
+              "displayName": "Ingatlan mérete",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Szobák száma",
+              "displayName": "Szobák száma",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ingatlan állapota",
+              "displayName": "Ingatlan állapota",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Építés éve",
+              "displayName": "Építés éve",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Extrák",
+              "displayName": "Extrák",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ügyfél megjegyzése",
+              "displayName": "Ügyfél megjegyzése",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AI ajánlata",
+              "displayName": "AI ajánlata",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Elküldés dátuma",
+              "displayName": "Elküldés dátuma",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        848,
+        0
+      ],
+      "id": "98c1f10f-0aa6-4683-b649-4c428dea7e0c",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "EPtjjcD3LBpzdLGJ",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "0fd2f0c1-0fc1-452c-a92a-fbe69ba26827",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "c06dd8e7637760fe39658a2976181cb3bb2dfda6ae243af17b02d75d3486634e"
+  },
+  "id": "ngZAwczpjyEyWEGy",
+  "tags": []
+}
